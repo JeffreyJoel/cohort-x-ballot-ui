@@ -55,7 +55,7 @@ const DelegateVote = () => {
         <Box width={"100%"}>
           <Flex direction="column" gap="3">
             <label>
-              <Text as="div" size="2" mb="1" weight="bold">
+              <Text as="div" size="2" mb="4" className="text-xl" weight="bold">
                 Delegate&apos;s Address
               </Text>
               <TextField.Input
@@ -64,7 +64,7 @@ const DelegateVote = () => {
                 placeholder="Enter Delegate's Address"
               />
             </label>
-            <Button className="rounded-2xl bg-purple-600" onClick={handleDelegate}>Delegate vote</Button>
+            <Button className="rounded-2xl w-fit mt-4 bg-purple-600" onClick={handleDelegate}>Delegate vote</Button>
           </Flex>
         </Box>
       </Flex>

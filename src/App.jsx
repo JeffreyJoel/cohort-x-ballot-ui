@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Text } from "@radix-ui/themes";
+import { Box, Flex, Text } from "@radix-ui/themes";
 import { configureWeb3Modal } from "./connection";
 import "@radix-ui/themes/styles.css";
 import Header from "./component/Header";
@@ -16,9 +16,10 @@ function App() {
   const handleVote = useVote();
 
   return (
-    <Container>
+    <div className="container max-w-screen-2xl">
+    {/* // <Container> */}
       <Header />
-      <main className="mt-6">
+      <main className="mt-12">
         <Box mb="4">
           <DelegateVote />
         </Box>
@@ -42,7 +43,8 @@ function App() {
         </Flex>
         <Toaster />
       </main>
-    </Container>
+      </div>
+    
   );
 }
 
