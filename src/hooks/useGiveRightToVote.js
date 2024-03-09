@@ -4,53 +4,64 @@ import { isAddress } from "ethers";
 import { getProvider } from "../constants/providers";
 import { getProposalsContract } from "../constants/contracts";
 import {
-    useWeb3ModalAccount,
-    useWeb3ModalProvider,
+  useWeb3ModalAccount,
+  useWeb3ModalProvider,
 } from "@web3modal/ethers/react";
+import { useToast } from "../components/ui/use-toast";
 
 const useGiveRightToVote = (address) => {
-    const { chainId } = useWeb3ModalAccount();
-    const { walletProvider } = useWeb3ModalProvider();
+  const { chainId } = useWeb3ModalAccount();
+  const { walletProvider } = useWeb3ModalProvider();
+  const { toast } = useToast();
 
-    return useCallback(async () => {
-        if (!isSupportedChain(chainId)) return console.error("Wrong network");
-        if (!isAddress(address)) return console.error("Invalid address");
-        const readWriteProvider = getProvider(walletProvider);
-        const signer = await readWriteProvider.getSigner();
+  return useCallback(async () => {
+    if (!isSupportedChain(chainId)) return console.error("Wrong network");
+    if (!isAddress(address)) return console.error("Invalid address");
+    const readWriteProvider = getProvider(walletProvider);
+    const signer = await readWriteProvider.getSigner();
 
-        const contract = getProposalsContract(signer);
+    const contract = getProposalsContract(signer);
 
-        try {
-            const estimatedGas = await contract.giveRightToVote.estimateGas(
-                address
-            );
-            // console.log("estimatedGas: ", estimatedGas);
+    try {
+      const estimatedGas = await contract.giveRightToVote.estimateGas(address);
+      // console.log("estimatedGas: ", estimatedGas);
 
-            // const feeData = await readWriteProvider.getFeeData();
+      // const feeData = await readWriteProvider.getFeeData();
 
-            // console.log("feeData: ", feeData);
+      // console.log("feeData: ", feeData);
 
-            // const gasFee = estimatedGas * feeData.gasPrice;
+      // const gasFee = estimatedGas * feeData.gasPrice;
 
-            // console.log("estimated: ", gasFee);
+      // console.log("estimated: ", gasFee);
 
-            const transaction = await contract.giveRightToVote(address, {
-                gasLimit: estimatedGas,
-            });
-            console.log("transaction: ", transaction);
-            const receipt = await transaction.wait();
+      const transaction = await contract.giveRightToVote(address, {
+        gasLimit: estimatedGas,
+      });
+      console.log("transaction: ", transaction);
+      const receipt = await transaction.wait();
 
-            console.log("receipt: ", receipt);
+      console.log("receipt: ", receipt);
 
-            if (receipt.status) {
-                return console.log("giveRightToVote successfull!");
-            }
+      if (receipt.status) {
+        toast({
+          description: "giveRightToVote successfull!",
+        });
+        return console.log("giveRightToVote successfull!");
+      }
 
-            console.log("giveRightToVote failed!");
-        } catch (error) {
-            console.error("error: ", error);
-        }
-    }, [address, chainId, walletProvider]);
+      console.log("giveRightToVote failed!");
+      toast({
+        description: "giveRightToVote failed!",
+        variant: "destructive",
+      });
+    } catch (error) {
+      console.error("error: ", error);
+      toast({
+        description: error,
+        variant: "destructive",
+      });
+    }
+  }, [address, chainId, walletProvider]);
 };
 
 export default useGiveRightToVote;

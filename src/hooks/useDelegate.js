@@ -5,6 +5,7 @@ import {
 import { getProposalsContract } from "../constants/contracts";
 import { getProvider } from "../constants/providers";
 import { isSupportedChain } from "../utils";
+import { toast } from "../components/ui/use-toast";
 
 const useDelegate = (to) => {
   const { chainId } = useWeb3ModalAccount();
@@ -25,10 +26,18 @@ const useDelegate = (to) => {
       console.log("receipt: ", receipt);
 
       if (receipt.status) {
+        toast({
+            description: "delegate successfull!",
+          });
         return console.log("delegate successfull!");
+        
       }
 
       console.log("delegate failed!");
+      toast({
+        description: "delegate failed!",
+        variant: "destructive",
+      });
     } catch (error) {
       console.log(error);
 
@@ -43,6 +52,10 @@ const useDelegate = (to) => {
         errorText = "An unknown error occured";
       }
       console.log(errorText);
+      toast({
+        description: errorText,
+        variant: "destructive",
+      });
     }
   };
 };
