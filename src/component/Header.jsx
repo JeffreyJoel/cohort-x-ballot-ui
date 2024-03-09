@@ -9,7 +9,7 @@ export default function Header() {
             <div>Ballot</div>
             <Flex gap={"4"} align={"center"}>
                 {isChairPerson && <GiveRightToVoteComponent />}
-                <w3m-button />
+                <w3m-button  theme="dark" />
             </Flex>
         </div>
     );

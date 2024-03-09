@@ -10,7 +10,7 @@ const GiveRightToVoteComponent = () => {
     return (
         <Dialog.Root>
             <Dialog.Trigger>
-                <Button className="bg-blue-600">Add Voter</Button>
+                <Button className="rounded-2xl bg-purple-700">Add Voter</Button>
             </Dialog.Trigger>
 
             <Dialog.Content style={{ maxWidth: 450 }}>
@@ -39,7 +39,7 @@ const GiveRightToVoteComponent = () => {
                         </Button>
                     </Dialog.Close>
                     <Button
-                        className="bg-blue-600"
+                        className="rounded-2xl bg-purple-600"
                         onClick={handleGiveRightToVote}
                     >
                         Add voter
